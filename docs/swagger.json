@@ -1,0 +1,33 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Low-Dependency http server for pocket universe project written in Go.",
+        "title": "Pocket Universe Backend",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "description": "returns ok",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "check server status",
+                "responses": {
+                    "200": {
+                        "description": "Server is running!",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
