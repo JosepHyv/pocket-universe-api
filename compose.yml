@@ -1,0 +1,30 @@
+version: 3.8
+
+services:
+  database:
+    image: docker.io/mongo:latest
+    container_name: pocket-database
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo_data:/data/db
+  storage:
+    image: docker.io/minio/minio:latest
+    container_name: pocket-file-storage
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USERNAME: user
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - minio_data:/data
+volumes:
+  mongo_data:
+  minio_data:
+
