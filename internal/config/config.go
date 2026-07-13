@@ -21,15 +21,15 @@ type Config struct {
 }
 
 
-func LoadConfig() (*Config, error){
-	cfg := &Config{}
+func LoadConfig() (Config, error){
+	cfg := Config{}
 	err := godotenv.Load()
 	if err != nil {
 		return cfg, fmt.Errorf("Error: No se encontró archivo .env, leyendo variables del sistema directamente")
 	}
-	err = env.Parse(cfg)
+	err = env.Parse(&cfg)
 	if err != nil  {
-		return &Config{}, fmt.Errorf("Loading environment")
+		return Config{}, fmt.Errorf("Loading environment")
 	}
 	return cfg, nil
 }

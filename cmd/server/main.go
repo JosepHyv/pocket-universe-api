@@ -20,7 +20,7 @@ func main(){
 		return
 	}
 
-	api := server.CreateServer()
+	api := server.CreateServer(cfg)
 	mux := api.SetUpRoutes()
 
 	log.Printf("🚀 Arrancando el servidor en http://localhost%s\n", fmt.Sprintf(":%v",cfg.AppPort))

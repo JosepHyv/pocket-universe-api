@@ -6,6 +6,15 @@ info:
   title: Pocket Universe Backend
   version: "1.0"
 paths:
+  /api/v1/createStar:
+    post:
+      description: returns id of star
+      produces:
+      - text/plain
+      responses: {}
+      summary: Create new star on database
+      tags:
+      - system
   /api/v1/health:
     get:
       description: returns ok

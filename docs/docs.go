@@ -15,6 +15,19 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/createStar": {
+            "post": {
+                "description": "returns id of star",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Create new star on database",
+                "responses": {}
+            }
+        },
         "/api/v1/health": {
             "get": {
                 "description": "returns ok",
