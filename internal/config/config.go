@@ -12,6 +12,7 @@ type Config struct {
 	DatabasePassword string `env:"DATABASE_PASSWORD"`
 	DatabaseUser string `env:"DATABASE_USER"`
 	DatabaseCollection string `env:"DATABASE_COLLECTION"`
+	DatabaseName string `env:"DATABASE_NAME"`
 	StoragePort int `env:"STORAGE_PORT"`
 	StorageHost string `env:"STORAGE_HOST"`
 	StorageUser string `env:"STORAGE_USER"`

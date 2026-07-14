@@ -1,10 +1,14 @@
 package main
 
 import (
-	"log"
+	"context"
 	"fmt"
+	"log"
 	"net/http"
+	"time"
+
 	"pocket-universe/internal/config"
+	"pocket-universe/internal/database"
 	server "pocket-universe/internal/http"
 )
 
@@ -13,25 +17,38 @@ import (
 // @description     Low-Dependency http server for pocket universe project written in Go.
 // @host            localhost:3000
 // @BasePath        /
-func main(){
+func main() {
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		fmt.Print(err)
-		return
+		log.Fatalf("Fallo crítico cargando configuración: %v", err)
 	}
 
-	api := server.CreateServer(cfg)
+	db, err := database.NewMongoClient(cfg)
+	if err != nil {
+		log.Fatalf("Error fatal levantando la base de datos: %v", err)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	defer func() {
+		log.Println("Cerrando conexiones del servidor...")
+		if err := db.Disconnect(ctx); err != nil {
+			log.Printf("Error durante la desconexion de Mongo: %v\n", err)
+		} else {
+			log.Println("Conexion a Mongo cerrada exitosamente.")
+		}
+	}()
+
+	api := server.CreateServer(db)
 	mux := api.SetUpRoutes()
 
-	log.Printf("🚀 Arrancando el servidor en http://localhost%s\n", fmt.Sprintf(":%v",cfg.AppPort))
+	puerto := fmt.Sprintf(":%d", cfg.AppPort) // %d es para enteros
+	log.Printf("🚀 Arrancando el servidor de Pocket Universe en http://localhost%s\n", puerto)
 
-	err = http.ListenAndServe(fmt.Sprintf(":%v", cfg.AppPort), mux)
+	err = http.ListenAndServe(puerto, mux)
 
 	if err != nil {
-		log.Fatalf("Error starting server %v", err)
+		log.Fatalf("Error deteniendo el servidor: %v", err)
 	}
-
-	log.Printf("Server started at: localhost%s", cfg.AppPort)
-
-
 }
