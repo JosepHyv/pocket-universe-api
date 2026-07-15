@@ -9,6 +9,7 @@ import (
 
 	"pocket-universe/internal/config"
 	"pocket-universe/internal/database"
+	"pocket-universe/internal/fileserver"
 	server "pocket-universe/internal/http"
 )
 
@@ -40,7 +41,12 @@ func main() {
 		}
 	}()
 
-	api := server.CreateServer(db)
+	fs, err := fileserver.NewClient(cfg)
+	if err != nil {
+		log.Fatalf("Error fatal conectando con el file storage: %v", err)
+	}
+
+	api := server.CreateServer(db, fs)
 	mux := api.SetUpRoutes()
 
 	puerto := fmt.Sprintf(":%d", cfg.AppPort) // %d es para enteros

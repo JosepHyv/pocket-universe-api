@@ -13,11 +13,11 @@ type Config struct {
 	DatabaseUser string `env:"DATABASE_USER"`
 	DatabaseCollection string `env:"DATABASE_COLLECTION"`
 	DatabaseName string `env:"DATABASE_NAME"`
-	StoragePort int `env:"STORAGE_PORT"`
 	StorageHost string `env:"STORAGE_HOST"`
-	StorageUser string `env:"STORAGE_USER"`
-	StoragePassword string `env:"STORAGE_PASSWORD"`
+	StorageAccessKey string `env:"STORAGE_ACCESS_KEY"`
+	StorageSecretKey string `env:"STORAGE_SECRET_KEY"`
 	StorageBucket string `env:"STORAGE_BUCKET"`
+	StorageUseSSL bool `env:"STORAGE_SSL"`
 	AppPort int `env:"APP_PORT"`
 }
 

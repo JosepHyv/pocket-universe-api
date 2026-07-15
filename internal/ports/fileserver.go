@@ -1,8 +1,10 @@
 package ports
 
-type ImageUrl string
+import (
+	"pocket-universe/internal/models"
+)
 
 type FileServerInterface interface {
-	SaveImage() ImageUrl
+	SaveImage() (models.ImageUrl, error)
 	DeleteImage(imageId string) error
 }

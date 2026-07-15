@@ -10,11 +10,13 @@ import (
 
 type Api struct {
 	database ports.DatabaseInterface
+	fileserver ports.FileServerInterface
 }
 
-func CreateServer(db ports.DatabaseInterface) *Api {
+func CreateServer(db ports.DatabaseInterface, fs ports.FileServerInterface) *Api {
 	return &Api{
 		database: db,
+		fileserver: fs,
 	}
 }
 
